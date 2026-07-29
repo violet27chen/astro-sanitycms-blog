@@ -30,3 +30,131 @@
     --color-base-200: #d7d8e4;
     --color-base-content: #171227;
 }
+
+/* ===== Article markdown rendering ===== */
+.markdown {
+    @apply text-base leading-relaxed;
+}
+.markdown > * + * {
+    @apply mt-4;
+}
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
+    @apply font-bold leading-tight;
+}
+.markdown h1 {
+    @apply mt-8 text-3xl;
+}
+.markdown h2 {
+    @apply mt-8 text-2xl;
+}
+.markdown h3 {
+    @apply mt-6 text-xl;
+}
+.markdown h4 {
+    @apply mt-4 text-lg;
+}
+.markdown p {
+    @apply my-4;
+}
+.markdown a {
+    @apply text-primary underline underline-offset-2;
+}
+.markdown ul {
+    @apply my-4 list-disc pl-6;
+}
+.markdown ol {
+    @apply my-4 list-decimal pl-6;
+}
+.markdown li > ul,
+.markdown li > ol {
+    @apply my-2;
+}
+.markdown blockquote {
+    @apply my-4 border-l-4 border-base-300 pl-4 italic opacity-80;
+}
+.markdown img {
+    @apply my-6 w-full rounded-box;
+}
+.markdown hr {
+    @apply my-8 border-base-300;
+}
+.markdown pre {
+    @apply my-6 overflow-x-auto rounded-box bg-[#0d1117] p-4 text-sm;
+}
+.markdown pre code,
+.markdown pre code.hljs {
+    @apply bg-transparent p-0 text-[#c9d1d9];
+}
+.markdown :not(pre) > code {
+    @apply rounded bg-base-200 px-1.5 py-0.5 text-sm;
+}
+.markdown table {
+    @apply my-6 block w-full overflow-x-auto text-sm;
+}
+.markdown table {
+    @apply border-collapse;
+}
+.markdown th,
+.markdown td {
+    @apply border border-base-300 px-3 py-2 text-left;
+}
+.markdown th {
+    @apply bg-base-200 font-semibold;
+}
+
+/* highlight.js github-dark token theme (inlined because the npm CSS import
+   fails to bundle token rules under Astro 7 + Rolldown/Vite). */
+.markdown .hljs-comment,
+.markdown .hljs-quote {
+    color: #8b949e;
+    font-style: italic;
+}
+.markdown .hljs-keyword,
+.markdown .hljs-selector-tag,
+.markdown .hljs-literal,
+.markdown .hljs-doctag,
+.markdown .hljs-type,
+.markdown .hljs-name,
+.markdown .hljs-strong,
+.markdown .hljs-attribute,
+.markdown .hljs-symbol,
+.markdown .hljs-bullet,
+.markdown .hljs-addition,
+.markdown .hljs-meta .hljs-string {
+    color: #ff7b72;
+}
+.markdown .hljs-string,
+.markdown .hljs-regexp,
+.markdown .hljs-link {
+    color: #a5d6ff;
+}
+.markdown .hljs-number,
+.markdown .hljs-class .hljs-title,
+.markdown .hljs-selector-id,
+.markdown .hljs-selector-class {
+    color: #79c0ff;
+}
+.markdown .hljs-title,
+.markdown .hljs-title.function_,
+.markdown .hljs-section {
+    color: #d2a8ff;
+}
+.markdown .hljs-variable,
+.markdown .hljs-template-variable,
+.markdown .hljs-params,
+.markdown .hljs-built_in {
+    color: #ffa657;
+}
+.markdown .hljs-meta {
+    color: #79c0ff;
+}
+.markdown .hljs-deletion {
+    color: #ffdcd7;
+    background-color: #67060c;
+}
+.markdown .hljs-emphasis {
+    font-style: italic;
+}

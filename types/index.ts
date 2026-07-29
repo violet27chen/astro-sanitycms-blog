@@ -100,6 +100,21 @@ export interface Person {
     company?: Company;
 }
 
+export interface Post {
+    _id: string;
+    title: string;
+    slug: Slug;
+    publishedAt?: string;
+    excerpt?: string;
+    body?: string;
+    coverImage?: CustomImage;
+    author?: Person;
+    metaTitle?: string;
+    addTitleSuffix?: boolean;
+    metaDescription?: string;
+    socialImage?: CustomImage;
+}
+
 export interface Section {
     _type?: string;
     theme?: 'light' | 'dark';

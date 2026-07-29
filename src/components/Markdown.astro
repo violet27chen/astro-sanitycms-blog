@@ -1,0 +1,41 @@
+---
+import { Marked } from 'marked';
+import hljs from 'highlight.js';
+
+interface Props {
+    content: string;
+    class?: string;
+}
+
+const { content, class: className } = Astro.props;
+
+const escapeAttr = (s: string) =>
+    s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+const marked = new Marked();
+
+marked.use({
+    renderer: {
+        code({ text, lang }) {
+            const language = lang && hljs.getLanguage(lang) ? lang : 'plaintext';
+            const highlighted = hljs.highlight(text, { language }).value;
+            return `<pre><code class="hljs language-${language}">${highlighted}</code></pre>`;
+        },
+        image({ href, title, text }) {
+            const alt = escapeAttr(text || '');
+            const titleAttr = title ? ` title="${escapeAttr(title)}"` : '';
+            if (href.includes('cdn.sanity.io')) {
+                const base = href.split('?')[0];
+                const srcset = [640, 1024, 1600].map((w) => `${base}?w=${w}&auto=format ${w}w`).join(', ');
+                const src = `${base}?w=1024&auto=format`;
+                return `<img src="${src}" srcset="${srcset}" sizes="(max-width: 768px) 100vw, 768px" alt="${alt}" loading="lazy" decoding="async"${titleAttr}>`;
+            }
+            return `<img src="${href}" alt="${alt}" loading="lazy" decoding="async"${titleAttr}>`;
+        }
+    }
+});
+
+const html = marked.parse(content || '') as string;
+---
+
+<div class:list={['markdown', className]} set:html={html} />

@@ -1,16 +1,13 @@
 # Cloudflare Workers + Assets deployment config (Astro static output)
 # `astro build` emits static assets into ./dist/client (generated wrangler.json lives there too).
 # `wrangler deploy` from the project root uses THIS file.
+# No KV / no Cloudflare Images binding -> fully on Cloudflare free tier, no paid features.
+# Custom domains (violet27chen.com / www.violet27chen.com) are managed in the Cloudflare
+# Dashboard as custom domains and persist across `wrangler deploy` — do NOT add them as `routes`.
 
-name = "violet27chen"
-compatibility_date = "2026-04-15"
+name = "astro-sanitycms-blog"
+compatibility_date = "2026-07-29"
 compatibility_flags = []
 
 # Static assets produced by `astro build` (no custom worker script -> Cloudflare serves them directly)
 assets = { directory = "./dist/client" }
-
-# Auto-provisioned on first deploy (free KV namespace). Used by Astro sessions.
-# Harmless for a static site; keeps the adapter's expected binding in place.
-kv_namespaces = [
-  { binding = "SESSION" }
-]

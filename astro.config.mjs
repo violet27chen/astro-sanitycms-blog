@@ -7,6 +7,7 @@ import { sanityConfig } from './src/utils/sanity-client';
 // https://astro.build/config
 export default defineConfig({
     output: 'static',
+    session: { driver: 'memory' },
     image: {
         domains: ['cdn.sanity.io']
     },

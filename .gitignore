@@ -22,3 +22,9 @@ pnpm-debug.log*
 
 # Local Netlify folder
 .netlify
+
+# Wrangler deploy state
+.wrangler/
+
+# Cloudflare dev vars (may contain secrets)
+.dev.vars

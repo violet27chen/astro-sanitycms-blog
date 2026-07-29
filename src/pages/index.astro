@@ -1,0 +1,62 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Action from '@components/Action.astro';
+import { client } from '@utils/sanity-client';
+
+const data = await client.fetch(`{
+  "config": *[_type == "siteConfig"][0] {
+    header { title, navLinks },
+    footer,
+    titleSuffix
+  },
+  "person": *[_id == "violet27chen"][0] {
+    name,
+    "image": {
+      "_id": image.asset->_id,
+      "src": image.asset->url,
+      "dimensions": image.asset->metadata.dimensions,
+      "alt": image.alt
+    }
+  }
+}`);
+
+const config = data?.config || {};
+const person = data?.person || {};
+const title = config?.header?.title ?? '小海博客';
+const bio = config?.footer?.text ?? '';
+const avatar = person?.image;
+const avatarSrc = avatar?.src ? `${avatar.src}?w=320&h=320&fit=crop&auto=format` : undefined;
+const githubLink =
+    (config?.header?.navLinks || []).find(
+        (l) => /github/i.test(l?.label || '') || /github\.com/i.test(l?.url || '')
+    ) || { _type: 'actionLink', label: 'GitHub', url: 'https://github.com/violet27chen' };
+---
+
+<Layout title={title} description={bio} addTitleSuffix={false}>
+    <section class="flex flex-col items-center justify-center gap-6 px-4 py-20 text-center sm:py-28">
+        {
+            avatarSrc && (
+                <div class="avatar">
+                    <div class="w-32 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 sm:w-40">
+                        <img
+                            src={avatarSrc}
+                            width={avatar?.dimensions?.width ?? 320}
+                            height={avatar?.dimensions?.height ?? 320}
+                            alt={avatar?.alt || title}
+                            class="h-full w-full rounded-full object-cover"
+                        />
+                    </div>
+                </div>
+            )
+        }
+        <h1 class="text-balance text-4xl font-black sm:text-6xl">{title}</h1>
+        {bio && <p class="max-w-prose text-lg opacity-70">{bio}</p>}
+        {
+            githubLink && (
+                <div class="mt-2">
+                    <Action action={githubLink} class="btn btn-primary" />
+                </div>
+            )
+        }
+    </section>
+</Layout>

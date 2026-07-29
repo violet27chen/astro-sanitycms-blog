@@ -1,18 +1,30 @@
 ---
 import { type ActionLink } from 'types';
+import githubMark from '../assets/github-mark.svg?raw';
 
 interface Props extends ActionLink {
     class?: string;
 }
 
 const { label, ariaLabel, url, class: className } = Astro.props;
+// Render the official GitHub mark as an icon-only link (brand allows the
+// Invertocat as a "social button" linking to a GitHub profile).
+const isGitHub = /github\.com/i.test(url || '');
+const content = isGitHub ? githubMark : label;
+const labelText = ariaLabel ?? label ?? 'GitHub';
 ---
 
 {
     url ? (
-        <a class:list={['text-neutral', className]} href={url} aria-label={ariaLabel}>
-            <span>{label}</span>
-        </a>
+        isGitHub ? (
+            <a class:list={['text-neutral', className]} href={url} aria-label={labelText} set:html={content} />
+        ) : (
+            <a class:list={['text-neutral', className]} href={url} aria-label={ariaLabel}>
+                <span>{label}</span>
+            </a>
+        )
+    ) : isGitHub ? (
+        <button class:list={['text-neutral', className]} aria-label={labelText} set:html={content} />
     ) : (
         <button class:list={['text-neutral', className]} aria-label={ariaLabel}>
             <span>{label}</span>

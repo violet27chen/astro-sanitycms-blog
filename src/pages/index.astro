@@ -22,7 +22,7 @@ const data = await client.fetch(`{
 
 const config = data?.config || {};
 const person = data?.person || {};
-const title = config?.header?.title ?? '小海博客';
+const title = config?.header?.title ?? 'violet';
 const bio = config?.footer?.text ?? '';
 const avatar = person?.image;
 const avatarSrc = avatar?.src ? `${avatar.src}?w=320&h=320&fit=crop&auto=format` : undefined;

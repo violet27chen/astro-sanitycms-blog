@@ -22,7 +22,7 @@ const data = await client.fetch(`{
 
 const config = data?.config || {};
 const person = data?.person || {};
-const title = config?.header?.title ?? 'violet';
+const title = config?.header?.title ?? '小海博客';
 const bio = config?.footer?.text ?? '';
 const avatar = person?.image;
 const avatarSrc = avatar?.src ? `${avatar.src}?w=320&h=320&fit=crop&auto=format` : undefined;
@@ -42,7 +42,7 @@ const githubLink =
                             src={avatarSrc}
                             width={avatar?.dimensions?.width ?? 320}
                             height={avatar?.dimensions?.height ?? 320}
-                            alt={avatar?.alt || title}
+                            alt={avatar?.alt || person?.name || title}
                             class="h-full w-full rounded-full object-cover"
                         />
                     </div>
